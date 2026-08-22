@@ -1,0 +1,15 @@
+<h1>Billetto Events</h1>
+
+<div class="events-grid">
+  <% @events.each do |event| %>
+    <div class="event-card">
+      <% if event.image_link.present? %>
+        <%= image_tag event.image_link, alt: event.title, class: "event-image" %>
+      <% end %>
+      <h2><%= event.title %></h2>
+      <p class="event-date"><%= event.date.strftime("%B %d, %Y at %H:%M") %></p>
+      <p class="event-description"><%= truncate(event.description, length: 150) %></p>
+      <%= link_to "View Details", event_path(event) %>
+    </div>
+  <% end %>
+</div>
