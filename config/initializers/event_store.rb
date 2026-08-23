@@ -7,6 +7,6 @@ Rails.application.config.after_initialize do
   # Subscribe the VoteCountHandler to vote events
   EVENT_STORE.subscribe(
     Voting::VoteCountHandler.new,
-    to: ["EventUpvoted", "EventDownvoted"]
+    to: [ "EventUpvoted", "EventDownvoted" ]
   )
 end

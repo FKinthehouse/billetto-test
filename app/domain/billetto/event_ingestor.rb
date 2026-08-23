@@ -1,15 +1,15 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 
 module Billetto
   class EventIngestor
-    def initialize(api:default_api,limit:10)
+    def initialize(api: default_api, limit: 10)
       @api = api
       @limit = limit
     end
 
     def call
       raw_events = @api.fetch_events(limit: @limit)
-      raw_events&.dig("data").each {|raw_event| process_event(raw_event) }
+      raw_events&.dig("data").each { |raw_event| process_event(raw_event) }
     end
 
     private

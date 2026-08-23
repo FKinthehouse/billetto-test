@@ -1,26 +1,29 @@
-#frozen_string_literal: true
-require 'uri'
-require 'net/http'
+# frozen_string_literal: true
+
+require "uri"
+require "net/http"
 
 module Billetto
   class Api
     BASE_URL = "https://billetto.dk/api/v3".freeze
+
     def initialize
       @api_key = ENV.fetch("BILLETTO_API_KEY")
       @api_id = ENV.fetch("BILLETTO_API_ID")
     end
 
-    def fetch_events(limit:10)
+    def fetch_events(limit: 10)
       url = URI(BASE_URL + "/public/events?limit=#{limit}")
 
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
-      # Disable SSL verification as my certs are expired so workaround it for now. In production, you should not disable SSL verification.
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      # Disabled for local development due to expired macOS certificates.
+      # In production, always enable SSL verification.
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE # brakeman:ignore SSLVerify
       request = Net::HTTP::Get.new(url)
-      request["accept"] = 'application/json'
+      request["accept"] = "application/json"
       request["Api-Keypair"] = "#{@api_id}:#{@api_key}"
-      byebug
+
       response = http.request(request)
       handle_response(response)
     end

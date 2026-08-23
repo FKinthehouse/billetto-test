@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :events, only: [:index, :show] do
-    resources :votes, only: [:create]
+  resources :events, only: [ :index, :show ] do
+    resources :votes, only: [ :create ]
   end
 
   root "events#index"
