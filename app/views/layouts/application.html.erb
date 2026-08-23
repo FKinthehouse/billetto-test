@@ -6,18 +6,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <style>
+      .flash-notice { background: #d4edda; color: #155724; padding: 12px; border-radius: 6px; margin: 10px 0; }
+      .flash-alert { background: #f8d7da; color: #721c24; padding: 12px; border-radius: 6px; margin: 10px 0; }
+    </style>
   </head>
-
   <body>
+    <% if notice.present? %>
+      <div class="flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert.present? %>
+      <div class="flash-alert"><%= alert %></div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

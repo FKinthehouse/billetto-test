@@ -18,6 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "rails_event_store"
 gem "http"
+gem "clerk-sdk-ruby", require: "clerk"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

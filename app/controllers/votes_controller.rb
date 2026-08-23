@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class VotesController < ApplicationController
+  before_action :require_clerk_session!
+
   def create
     event = Event.find(params[:event_id])
     vote_type = params[:vote_type]
@@ -10,12 +12,23 @@ class VotesController < ApplicationController
       return
     end
 
+    # Check if user already voted on this event
+    existing_votes = EVENT_STORE.read
+      .stream("EventVote$#{event.billetto_id}")
+      .to_a
+      .select { |e| e.data["user_id"] == current_user.id }
+
+    if existing_votes.any?
+      redirect_to events_path, alert: "You have already voted on this event"
+      return
+    end
+
     event_class = vote_type == "up" ? EventUpvoted : EventDownvoted
 
     EVENT_STORE.publish(
       event_class.new(data: {
         "event_id" => event.billetto_id,
-        "user_id" => 1 # TODO: Replace with Clerk auth user ID
+        "user_id" => current_user.id
       }),
       stream_name: "EventVote$#{event.billetto_id}"
     )
