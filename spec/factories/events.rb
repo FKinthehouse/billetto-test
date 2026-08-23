@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :event do
-    title { "MyString" }
-    date { "2026-08-22 21:56:45" }
-    image_url { "MyText" }
-    description { "MyText" }
-    billetto_id { 1 }
+    sequence(:title) { |n| "Event #{n}" }
+    date { 1.week.from_now }
+    description { "A great event description" }
+    image_link { "https://example.com/image.jpg" }
+    sequence(:billetto_id) { |n| 1000000 + n }
   end
 end

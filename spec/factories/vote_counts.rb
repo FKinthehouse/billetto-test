@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :vote_count do
-    event_id { 1 }
-    upvotes { 1 }
-    downvotes { 1 }
+    association :event, factory: :event
+    upvotes { 0 }
+    downvotes { 0 }
   end
 end
