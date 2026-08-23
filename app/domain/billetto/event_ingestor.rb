@@ -16,9 +16,8 @@ module Billetto
 
     def process_event(raw_event)
       return unless raw_event
-        byebug
+
       Event.find_or_create_by(billetto_id: raw_event["id"]) do |event|
-        byebug
         event.title = raw_event["title"]
         event.date = raw_event["startdate"]
         event.description = raw_event["description"]
