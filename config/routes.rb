@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  resources :events, only: [:index, :show]
+  resources :events, only: [:index, :show] do
+    resources :votes, only: [:create]
+  end
 
   root "events#index"
 end

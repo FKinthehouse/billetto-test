@@ -4,11 +4,17 @@
   <% @events.each do |event| %>
     <div class="event-card">
       <% if event.image_link.present? %>
-        <%= image_tag event.image_link, alt: event.title, class: "event-image" %>
+        <%= image_tag event.image_link, alt: event.title, class: "event-image" , size: "300x200" %>
       <% end %>
       <h2><%= event.title %></h2>
       <p class="event-date"><%= event.date.strftime("%B %d, %Y at %H:%M") %></p>
       <p class="event-description"><%= truncate(event.description, length: 150) %></p>
+      <div class="votes">
+        <%= button_to "Upvote", event_votes_path(event,vote_type: "up"), method: :post, class: "upvote-button" %>
+        <span class="vote-count">Upvotes: <%= event.vote_count&.upvotes || 0 %></span>
+        <%= button_to "Downvote", event_votes_path(event,vote_type: "down"), method: :post, class: "downvote-button" %>
+        <span class="vote-count">Downvotes: <%= event.vote_count&.downvotes || 0 %></span>
+      </div>
       <%= link_to "View Details", event_path(event) %>
     </div>
   <% end %>
