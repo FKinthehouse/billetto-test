@@ -51,6 +51,8 @@ group :development, :test do
   gem "faker"
   gem "dotenv-rails"
   gem "byebug"
+  gem "capybara"
+  gem "selenium-webdriver"
 end
 
 group :development do
